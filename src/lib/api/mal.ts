@@ -28,6 +28,30 @@ export async function getSeasonalAnime(year: number, season: string) {
     }
 }
 
+export async function getAnimeRanking() {
+    const cacheKey = `anime-ranking`;
+    const cacheData = cache.get(cacheKey);
+    if (cacheData) {
+        console.log("Using cache for anime ranking...");
+        return cacheData;
+
+    }
+
+    try {
+        console.log("No cache found for anime ranking, fetching from API...");
+        const res = await axios.get(`${MAL_API_URL}/anime/ranking?ranking_type=all`, {
+            headers: {
+                "X-MAL-CLIENT-ID": CLIENT_ID
+            }
+        });
+        cache.set(cacheKey, res.data);
+        return res.data;
+    } catch (err) {
+        console.error("Error fetching seasonal anime:", err);
+        throw err;
+    }
+}
+
 export async function searchAnime(query: string) {
     try {
         const res = await axios.get(`${MAL_API_URL}/anime?q=${query}&fields=id,title,main_picture`, {

@@ -40,3 +40,41 @@ a {
     color-scheme: dark;
   }
 }
+
+.embla {
+  overflow: hidden;
+  position: relative;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  ;
+  padding: 0 10px;
+}
+
+.embla__dots {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+
+.embla__dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: #f50000;
+  border: none;
+  cursor: pointer;
+}
+
+.embla__dot.is-selected {
+  background-color: #ffffff;
+}

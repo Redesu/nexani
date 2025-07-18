@@ -1,7 +1,7 @@
 "use client";
 import { useSeasonalAnime } from "@/hooks/useAnimeData";
-import AnimeGrid from "@/components/AnimeGrid";
-import { Box, CircularProgress } from "@mui/material";
+import SeasonalAnimeSlide from "@/components/SeasonalAnimeSlide";
+import { Box, LinearProgress } from "@mui/material";
 
 /**
  * 
@@ -40,9 +40,12 @@ export default function Home() {
   return (
     <Box sx={{ mt: 4 }}>
       {loading ? (
-        <CircularProgress />
+        <LinearProgress color="success" />
       ) : (
-        <AnimeGrid animes={anime} />
+        <>
+          <h1 style={{ textAlign: 'center' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1>
+          <SeasonalAnimeSlide animes={anime} />
+        </>
       )
       }
     </Box>
