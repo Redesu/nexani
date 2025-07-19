@@ -54,11 +54,13 @@ export async function getAnimeRanking() {
 
 export async function searchAnime(query: string) {
     try {
+        console.log("Searchin for anime with query: ", query)
         const res = await axios.get(`${MAL_API_URL}/anime?q=${query}&fields=id,title,main_picture`, {
             headers: {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
+        console.log("Search results: ", res.data);
         return res.data;
     } catch (err) {
         console.error("Error searching anime:", err);
