@@ -81,28 +81,24 @@ a {
 
 .search-bar-container {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.search-results-dropdown,
-.search-status,
-.search-error {
+.search-results-container {
   position: absolute;
-  justify-content: center;
-  align-items: center;
   top: 100%;
   left: 0;
-  width: 100%;
-  max-width: 260px;
-  max-height: 200px;
-  overflow-y: auto;
-  background-color: #171717;
-  border: 1px solid #eee;
-  border-top: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  right: 0;
+  width: '20ch';
+  display: flex;
+  justify-content: center;
+}
+
+.search-status {
+  color: white;
   padding: 8px;
-  box-sizing: border-box;
-  ;
+  display: block;
 }
 
 .search-results-dropdown ul {

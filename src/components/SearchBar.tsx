@@ -2,9 +2,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { ClassNames } from '@emotion/react';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -46,11 +45,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchBar() {
+export default function SearchBar({ onSearchChange }: any) {
 
     const [query, setQuery] = useState('');
     const { searchResults, loading: searchLoading, error: searchError } = useSearchAnime(query, 700);
 
+
+    useEffect(() => {
+        onSearchChange(query, searchResults, searchLoading, searchError);
+    }, [query, searchResults, searchLoading, searchError])
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
         setQuery(event.target.value);
@@ -58,7 +61,7 @@ export default function SearchBar() {
 
     return (
         <Box className='search-bar-container'>
-            <Search className='search-bar-container'>
+            <Search>
                 <SearchIconWrapper>
                     <SearchIcon />
                 </SearchIconWrapper>
@@ -69,19 +72,7 @@ export default function SearchBar() {
                     value={query}
                 />
             </Search>
-            {searchLoading && <div className='search-status'>Searching...</div>}
-            {searchError && <p className='search-error' style={{ color: 'red' }}>Error: {searchError}</p>}
-            {
-                query.trim() && !searchLoading && searchResults.length > 0 && (
-                    <div className='search-results-dropdown'>
-                        <ul>
-                            {searchResults.map((anime) => (
-                                <li key={anime.node.id}>{anime.node.title}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )
-            }
+
         </Box>
     )
 }

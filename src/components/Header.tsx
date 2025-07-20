@@ -15,6 +15,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchBar from './SearchBar';
+import { SearchBarResults } from './SearchBarResults';
+import { useSearchAnime } from '@/hooks/useSearchAnime';
+import { useState } from 'react';
 
 
 
@@ -116,6 +119,16 @@ export default function SearchAppBar() {
             </MenuItem>
         </Menu>
     );
+    const [searchState, setSearchState] = useState({
+        query: '',
+        searchResults: [],
+        searchLoading: false,
+        searchError: null,
+    });
+
+    const handleSearchChange = (query: string, searchResults: any, searchLoading: boolean, searchError: any) => {
+        setSearchState({ query, searchResults, searchLoading, searchError });
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -148,8 +161,22 @@ export default function SearchAppBar() {
                         />
                     </Search> */}
                     <Box sx={{ flexGrow: 1 }} />
-
-                    <SearchBar />
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        position: 'relative',
+                        alignItems: 'flex-end'
+                    }} >
+                        <Box sx={{ position: 'relative' }}>
+                            <SearchBar onSearchChange={handleSearchChange} />
+                        </Box>
+                        <SearchBarResults
+                            query={searchState.query}
+                            searchLoading={searchState.searchLoading}
+                            searchError={searchState.searchError}
+                            searchResults={searchState.searchResults}
+                        />
+                    </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                         {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -192,6 +219,7 @@ export default function SearchAppBar() {
                     </Box>
                 </Toolbar>
             </AppBar>
+
             {renderMobileMenu}
             {renderMenu}
         </Box>
