@@ -1,7 +1,11 @@
 "use client";
-import { useSeasonalAnime } from "@/hooks/useAnimeData";
+import { useSeasonalAnime } from "@/hooks/useSeasonalAnime";
 import SeasonalAnimeSlide from "@/components/SeasonalAnimeSlide";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, Container, LinearProgress } from "@mui/material";
+import AnimeCard from "@/components/AnimeCard";
+import { useTopUpcomingAnime } from "@/hooks/useTopUpcomingAnime";
+import AnimeGrid from "@/components/AnimeGrid";
+import { all } from "axios";
 
 /**
  * 
@@ -14,7 +18,7 @@ import { Box, LinearProgress } from "@mui/material";
 │  
 ├── components/  
 │   ├── AnimeCard.tsx       # Reusable anime card  
-│   ├── AnimeGrid.tsx       # Grid layout for anime  
+│   ├── SeasonalAnimeSlide.tsx       # Grid layout for anime  
 │   └── SearchBar.tsx       # Search input  
 │  
 ├── lib/  
@@ -37,14 +41,21 @@ export default function Home() {
   const currentYear = new Date().getFullYear();
   const currentSeason = 'summer';
   const { anime, loading } = useSeasonalAnime(currentYear, currentSeason);
+  const { topUpcomingAnime, loadingTopUpcoming } = useTopUpcomingAnime();
   return (
     <Box sx={{ mt: 4 }}>
       {loading ? (
         <LinearProgress color="success" />
       ) : (
         <>
-          <h1 style={{ textAlign: 'center' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1>
-          <SeasonalAnimeSlide animes={anime} />
+          <Box>
+            <h1 style={{ textAlign: 'center' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1>
+            <SeasonalAnimeSlide animes={anime} />
+          </Box>
+          <Box className="top upcoming-animes">
+            <h1 style={{ textAlign: 'left', marginLeft: '5px' }}>Top 20 upcoming animes</h1>
+            <AnimeGrid animes={topUpcomingAnime} />
+          </Box>
         </>
       )
       }

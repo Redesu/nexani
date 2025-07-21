@@ -1,84 +1,66 @@
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
 import { Anime } from "@/lib/types/anime";
-import { Card, Typography, CardMedia, Box } from "@mui/material";
+import { Box, useTheme } from '@mui/material';
+
 interface AnimeCardProps {
     anime: Anime;
 }
 
 const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
+    const theme = useTheme();
     return (
-        <Card
-            sx={{
-                width: "100%",
-                height: "100%",
-                bgcolor: "transparent",
-                boxShadow: "none",
-                position: "relative",
-                borderRadius: "16px",
-                overflow: "hidden",
-                objectFit: "cover",
-                "&:hover": {
-                    transform: "scale(1.02)",
-                }
-            }}>
-            <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundImage: `url(${anime.node.main_picture.large})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        filter: 'blur(5px)',
-                        transform: 'scale(1.1)',
-                        zIndex: 0,
-                    }}
-                />
-                <CardMedia
-                    component="img"
-                    width="100%"
-                    image={anime.node.main_picture.large}
-                    alt={anime.node.title}
-                    sx={{
-                        position: 'relative',
-                        zIndex: 1,
-                        width: '100%',
-                        borderRadius: '12px',
-                        height: '400px',
-                        objectFit: 'contain',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-                    }}
-                />
+        <Card sx={{
+            width: 225,
+            height: 305,
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: theme.shape.borderRadius,
+            '& .MuiCardMedia-img': {
+                transformOrigin: 'top center'
+            }
+        }} className='card-container' >
+            <CardActionArea href={`/anime/${anime.node.id}`}>
                 <Box sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    p: 2,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)',
-                    borderRadius: '0 0 12px 12px'
+                    width: '100%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '250px'
                 }}>
-                    <Typography
-                        variant="h6"
-                        component="div"
+                    <CardMedia
+                        component="img"
+                        image={anime.node.main_picture.large}
+                        alt={anime.node.title}
                         sx={{
-                            position: 'relative',
-                            zIndex: 1,
-                            color: 'white',
-                            fontWeight: 'bold',
-                            textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
+                            transition: 'transform 0.3s ease',
+                            height: '100%',
+                            width: '100%',
+                            objectFit: 'cover'
                         }}
-                    >
+                    />
+                </Box>
+                <CardContent className='card-content' sx={{ bgcolor: '#171717', flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h6" component="div" sx={{
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '1rem',
+                        lineHeight: 1.2,
+                        maxHeight: '3.6em', // 1.2 * 3 = 3.6em (3 lines)
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                    }} title={anime.node.title}>
                         {anime.node.title}
                     </Typography>
-                </Box>
-            </Box>
-        </Card>
+                </CardContent>
+            </CardActionArea>
+        </Card >
     )
 }
 

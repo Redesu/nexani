@@ -1,15 +1,15 @@
 import { Anime } from "@/lib/types/anime";
 import { Grid, Alert, Container, Button } from "@mui/material";
-import AnimeCard from "./AnimeCard";
+import SlideAnime from "./SlideAnime";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoPlay from "embla-carousel-autoplay";
 import { useState, useCallback, useEffect } from "react";
 
-interface AnimeGridProps {
+interface SeasonalAnimeSlideProps {
     animes: Anime[];
 }
 
-const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
+const SeasonalAnimeSlide: React.FC<SeasonalAnimeSlideProps> = ({ animes }) => {
     const [emblaRef, emblaApi] = useEmblaCarousel(
         {
             loop: true,
@@ -51,7 +51,7 @@ const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
             <div className="embla__container">
                 {animes.map((anime) => (
                     <Grid key={anime.node.id} className="embla__slide">
-                        <AnimeCard anime={anime} />
+                        <SlideAnime anime={anime} />
                     </Grid>
                 ))}
             </div>
@@ -77,4 +77,4 @@ const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
     )
 }
 
-export default AnimeGrid;
+export default SeasonalAnimeSlide;

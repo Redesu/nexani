@@ -47,7 +47,7 @@ export async function getAnimeRanking() {
         cache.set(cacheKey, res.data);
         return res.data;
     } catch (err) {
-        console.error("Error fetching seasonal anime:", err);
+        console.error("Error fetching top anime:", err);
         throw err;
     }
 }
@@ -63,5 +63,30 @@ export async function searchAnime(query: string) {
         return res.data;
     } catch (err) {
         console.error("Error searching anime:", err);
+    }
+}
+
+
+export async function getTopUpcomingAnime() {
+    const cacheKey = `top-upcoming-anime`;
+    const cacheData = cache.get(cacheKey);
+    if (cacheData) {
+        console.log("Using cache for top upcoming anime...");
+        return cacheData;
+
+    }
+
+    try {
+        console.log("No cache found for top upcoming anime, fetching from API...");
+        const res = await axios.get(`${MAL_API_URL}/anime/ranking?ranking_type=upcoming&limit=20`, {
+            headers: {
+                "X-MAL-CLIENT-ID": CLIENT_ID
+            }
+        });
+        cache.set(cacheKey, res.data);
+        return res.data;
+    } catch (err) {
+        console.error("Error fetching top upcoming anime:", err);
+        throw err;
     }
 }
