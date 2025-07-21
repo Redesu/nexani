@@ -48,7 +48,7 @@ export default function Home() {
         <LinearProgress color="success" />
       ) : (
         <>
-          <Box>
+          <Box> 
             <h1 style={{ textAlign: 'center' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1>
             <SeasonalAnimeSlide animes={anime} />
           </Box>

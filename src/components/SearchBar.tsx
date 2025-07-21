@@ -4,6 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -49,6 +50,7 @@ export default function SearchBar({ onSearchChange }: any) {
 
     const [query, setQuery] = useState('');
     const { searchResults, loading: searchLoading, error: searchError } = useSearchAnime(query, 700);
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -70,6 +72,7 @@ export default function SearchBar({ onSearchChange }: any) {
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={handleSearchChange}
                     value={query}
+                    onKeyUp={(e) => e.key === 'Enter' && router.push(`/search/${query}`)}
                 />
             </Search>
 
