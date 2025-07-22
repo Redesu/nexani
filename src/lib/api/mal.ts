@@ -92,22 +92,14 @@ export async function getTopUpcomingAnime() {
 }
 
 export async function getAnimeDetails(id: number) {
-    const cacheKey = `anime-details`;
-    const cacheData = cache.get(cacheKey);
-    if (cacheData) {
-        console.log("Using cache for anime details...");
-        return cacheData;
-
-    }
 
     try {
         console.log("No cache found for anime details, fetching from API...");
-        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,main_picture,start_date,end_date,status,num_episodes`, {
+        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,main_picture,start_date,end_date,status,num_episodes,synopsis`, {
             headers: {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
-        cache.set(cacheKey, res.data);
         return res.data;
     } catch (err) {
         console.error("Error fetching top upcoming anime:", err);

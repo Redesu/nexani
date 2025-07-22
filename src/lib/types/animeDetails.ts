@@ -12,4 +12,5 @@ export interface AnimeDetails {
     end_date: string;
     status: string;
     num_episodes: number;
+    synopsis: string;
 }
