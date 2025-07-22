@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -12,12 +12,35 @@ interface SearchBarResultsProps {
     searchLoading: boolean;
     searchError: string | null;
     searchResults: Array<{ node: { id: string | number; title: string; main_picture: { large: string; medium: string } } }>;
+    onCloseResults: () => void;
 }
 
 
-export const SearchBarResults: React.FC<SearchBarResultsProps> = ({ query, searchLoading, searchError, searchResults }) => {
+export const SearchBarResults: React.FC<SearchBarResultsProps> = ({ query, searchLoading, searchError, searchResults, onCloseResults }) => {
     const theme = useTheme();
+    const [isVisible, setIsVisible] = useState(true);
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            const closeKeys = ['Escape', 'Tab', 'Enter', 'Esc']
+
+            if (closeKeys.includes(event.key)) {
+                setIsVisible(false);
+                onCloseResults();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onCloseResults]);
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, [query]);
+
+    if (!isVisible || !query) return null;
 
     return (
         <Box className='search-results-container' sx={{

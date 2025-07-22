@@ -18,6 +18,7 @@ import SearchBar from './SearchBar';
 import { SearchBarResults } from './SearchBarResults';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState } from 'react';
+import { Link } from '@mui/material';
 
 
 
@@ -143,14 +144,16 @@ export default function SearchAppBar() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        NexAni
-                    </Typography>
+                    <Link href="/" color="inherit" underline="none">
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                        >
+                            NexAni
+                        </Typography>
+                    </Link>
                     {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -175,6 +178,7 @@ export default function SearchAppBar() {
                             searchLoading={searchState.searchLoading}
                             searchError={searchState.searchError}
                             searchResults={searchState.searchResults}
+                            onCloseResults={() => setSearchState({ ...searchState, searchResults: [] })}
                         />
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
