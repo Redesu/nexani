@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="vsc-initialized">
+      <body className="vsc-initialized vsc-domain-localhost">
         <Header />
         {children}
       </body>

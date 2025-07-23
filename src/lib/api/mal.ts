@@ -59,7 +59,6 @@ export async function searchAnime(query: string) {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
-        console.log("Search results: ", res.data);
         return res.data;
     } catch (err) {
         console.error("Error searching anime:", err);
@@ -94,8 +93,7 @@ export async function getTopUpcomingAnime() {
 export async function getAnimeDetails(id: number) {
 
     try {
-        console.log("No cache found for anime details, fetching from API...");
-        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,main_picture,start_date,end_date,status,num_episodes,synopsis`, {
+        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,alternative_titles,main_picture,start_date,end_date,status,num_episodes,synopsis,mean,genres`, {
             headers: {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }

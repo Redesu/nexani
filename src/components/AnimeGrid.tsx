@@ -24,8 +24,6 @@ const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
         }
     };
 
-    console.log(gridRef.current)
-
     useEffect(() => {
         const grid = gridRef.current;
         if (grid) {
