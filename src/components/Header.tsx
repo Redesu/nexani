@@ -18,13 +18,15 @@ import SearchBar from './SearchBar';
 import { SearchBarResults } from './SearchBarResults';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState } from 'react';
-import { Link } from '@mui/material';
+import { Button, CircularProgress, Link } from '@mui/material';
 import LoginButton from './auth/LoginButton';
+import { useAuth } from '@/context/AuthContext';
 
 
 
 export default function SearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const { user, loading } = useAuth();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
 
@@ -182,7 +184,15 @@ export default function SearchAppBar() {
                             onCloseResults={() => setSearchState({ ...searchState, searchResults: [] })}
                         />
                     </Box>
-                    <LoginButton />
+
+                    {loading ? (
+                        <CircularProgress size={24} color='inherit' />
+                    ) : !user ? (
+                        <LoginButton />
+                    ) : (
+                        <Button variant="contained">Logout</Button>
+                    )}
+
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                         {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
