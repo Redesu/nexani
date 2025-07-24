@@ -19,6 +19,7 @@ import { SearchBarResults } from './SearchBarResults';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState } from 'react';
 import { Link } from '@mui/material';
+import LoginButton from './auth/LoginButton';
 
 
 
@@ -181,6 +182,7 @@ export default function SearchAppBar() {
                             onCloseResults={() => setSearchState({ ...searchState, searchResults: [] })}
                         />
                     </Box>
+                    <LoginButton />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                         {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
