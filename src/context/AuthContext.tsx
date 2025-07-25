@@ -3,13 +3,7 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { getUserDetails } from "@/lib/auth/mal";
 import { UserProfile } from "@/lib/types/UserProfile";
-
-export interface AuthContextType {
-    user: UserProfile | null;
-    loading: boolean;
-    error: string | null;
-    setUser: (user: UserProfile | null) => void;
-}
+import { AuthContextType } from "@/lib/types/AuthContextType";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
