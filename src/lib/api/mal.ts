@@ -8,6 +8,7 @@ const CLIENT_ID = process.env.MAL_CLIENT_ID;
 export async function getSeasonalAnime(year: number, season: string) {
     const cacheKey = `seasonal-anime-${year}-${season}`;
     const cacheData = cache.get(cacheKey);
+    const cacheTtl = 60 * 60 * 1000; // 1 hour
 
     if (cacheData) {
         console.log("Using cache for seasonal anime...");
@@ -20,7 +21,7 @@ export async function getSeasonalAnime(year: number, season: string) {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
-        cache.set(cacheKey, res.data);
+        cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
         console.error("Error fetching seasonal anime:", err);
@@ -31,6 +32,7 @@ export async function getSeasonalAnime(year: number, season: string) {
 export async function getAnimeRanking() {
     const cacheKey = `anime-ranking`;
     const cacheData = cache.get(cacheKey);
+    const cacheTtl = 60 * 60 * 1000; // 1 hour
     if (cacheData) {
         console.log("Using cache for anime ranking...");
         return cacheData;
@@ -44,7 +46,7 @@ export async function getAnimeRanking() {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
-        cache.set(cacheKey, res.data);
+        cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
         console.error("Error fetching top anime:", err);
@@ -68,6 +70,7 @@ export async function searchAnime(query: string) {
 
 export async function getTopUpcomingAnime() {
     const cacheKey = `top-upcoming-anime`;
+    const cacheTtl = 60 * 60 * 1000; // 1 hour
     const cacheData = cache.get(cacheKey);
     if (cacheData) {
         console.log("Using cache for top upcoming anime...");
@@ -82,7 +85,7 @@ export async function getTopUpcomingAnime() {
                 "X-MAL-CLIENT-ID": CLIENT_ID
             }
         });
-        cache.set(cacheKey, res.data);
+        cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
         console.error("Error fetching top upcoming anime:", err);

@@ -1,12 +1,23 @@
 class Cache {
-    private cache = new Map<string, any>();
+    private cache = new Map<string, { value: any; expiresAt: number }>();
 
     get(key: string): any | undefined {
-        return this.cache.get(key);
+        const entry = this.cache.get(key);
+        if (!entry) return undefined;
+
+        if (Date.now() > entry.expiresAt) {
+            this.cache.delete(key);
+            return undefined;
+        }
+
+        return entry.value;
     }
 
-    set(key: string, value: any): void {
-        this.cache.set(key, value);
+    set(key: string, value: any, ttl: number = 60 * 1000): void {
+        this.cache.set(key, {
+            value,
+            expiresAt: Date.now() + ttl
+        });
     }
 
     clear(key?: string): void {

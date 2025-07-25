@@ -1,8 +1,13 @@
-import { Button, Box } from "@mui/material";
+import { Button, Box, MenuItem } from "@mui/material";
 
 
 export default function LoginButton() {
+
+    const handleLogin = () => {
+        window.location.href = '/api/auth/login'
+    }
+
     return (
-        <Button variant="contained" href="/api/auth/login">Login with MyAnimeList</Button>
+        <MenuItem onClick={handleLogin}>Login</MenuItem>
     );
 }

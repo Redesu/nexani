@@ -18,9 +18,10 @@ import SearchBar from './SearchBar';
 import { SearchBarResults } from './SearchBarResults';
 import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState } from 'react';
-import { Button, CircularProgress, Link } from '@mui/material';
+import { Avatar, Button, CircularProgress, Link } from '@mui/material';
 import LoginButton from './auth/LoginButton';
 import { useAuth } from '@/context/AuthContext';
+import LogoutButton from './auth/LogoutButton';
 
 
 
@@ -67,8 +68,18 @@ export default function SearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {loading ? (
+                <MenuItem disabled>
+                    <CircularProgress size={24} color="inherit" />
+                </MenuItem>
+            ) : !user ? (
+                <LoginButton />
+            ) : ([
+                <MenuItem key="profile" onClick={handleMenuClose}>Profile</MenuItem>,
+                <MenuItem key="account" onClick={handleMenuClose}>My account</MenuItem>,
+                <LogoutButton key="logout" />
+            ])}
+
         </Menu>
     );
 
@@ -121,6 +132,19 @@ export default function SearchAppBar() {
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
+            <MenuItem>
+                <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>Logout</p>
+            </MenuItem>
+
         </Menu>
     );
     const [searchState, setSearchState] = useState({
@@ -185,13 +209,6 @@ export default function SearchAppBar() {
                         />
                     </Box>
 
-                    {loading ? (
-                        <CircularProgress size={24} color='inherit' />
-                    ) : !user ? (
-                        <LoginButton />
-                    ) : (
-                        <Button variant="contained">Logout</Button>
-                    )}
 
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
@@ -218,7 +235,7 @@ export default function SearchAppBar() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <Avatar alt={user?.name} src={user?.picture} />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
