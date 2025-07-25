@@ -1,42 +1,57 @@
 "use server";
+import axios from 'axios';
+import { cookies } from 'next/headers';
 
-import axios from "axios";
-import { cookies } from "next/headers";
-import { cache } from "../api/cache";
+const malApi = axios.create({
+  baseURL: 'https://api.myanimelist.net/v2',
+});
 
+malApi.interceptors.request.use(
+  async (config) => {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get('access_token');
 
-const MAL_API_URL = "https://api.myanimelist.net/v2";
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken.value}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
+malApi.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
 
-export async function getUserDetails() {
-    const cookiesStore = await cookies();
-    const accessToken = cookiesStore.get('access_token')?.value;
-    const cacheKey = `user-details`;
-    const cacheData = cache.get(cacheKey);
-    const cacheTtl = 5 * 60 * 1000; // 5 minutes
-
-    if (!accessToken) {
-        return { error: "No access token found" }
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await axios.post('/api/auth/refresh');
+        return malApi(originalRequest);
+      } catch (refreshError) {
+        console.error('Failed to refresh token, logging out.');
+        window.location.href = '/api/auth/logout'; 
+        return Promise.reject(refreshError);
+      }
     }
 
-    if (cacheData) {
-        console.log("Using cache for user details...");
-        return cacheData;
-    }
+        return Promise.reject(error);
+  }
+);
 
-    try {
-        console.log("Fetching user details...");
+export default malApi;
 
-        const res = await axios.get(`${MAL_API_URL}/users/@me`, {
-            headers: {
-                "Authorization": `Bearer ${accessToken}`,
-            }
-        });
-        cache.set(cacheKey, res.data, cacheTtl);
-        return res.data;
-    } catch (err) {
-        console.error("Error fetching user details:", err);
-        throw err;
-    }
+export const getUserDetails = async () => {
+  const response = await malApi.get('/users/@me');
+  return response.data;
+};
 
-}
+export const getUserAnimeList = async (status: string) => {
+  const response = await malApi.get(`/users/@me/animelist?status=${status}&limit=100`);
+  return response.data;
+};
