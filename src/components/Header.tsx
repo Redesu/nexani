@@ -22,6 +22,8 @@ import { Avatar, Button, CircularProgress, Link } from '@mui/material';
 import LoginButton from './auth/LoginButton';
 import { useAuth } from '@/context/AuthContext';
 import LogoutButton from './auth/LogoutButton';
+import ProfileButton from './auth/ProfileButton';
+import AnimeListButton from './auth/AnimeListButton';
 
 
 
@@ -75,8 +77,8 @@ export default function SearchAppBar() {
             ) : !user ? (
                 <LoginButton />
             ) : ([
-                <MenuItem key="profile" onClick={handleMenuClose}>Profile</MenuItem>,
-                <MenuItem key="account" onClick={handleMenuClose}>My account</MenuItem>,
+                <ProfileButton key="profile" />,
+                <AnimeListButton key="animelist" />,
                 <LogoutButton key="logout" />
             ])}
 

@@ -7,7 +7,9 @@ interface AnimeDetailsProps {
 
 const AnimeDetailsComponent: React.FC<AnimeDetailsProps> = ({ animeDetails }) => {
     return (
-        <Box sx={{ flexGrow: 1, p: 3, backgroundColor: 'background.default' }}>
+        <Box sx={{
+            flexGrow: 1, p: 3, backgroundColor: 'background.default', minHeight: 'calc(100vh - 64px)'
+        }}>
             <Grid container spacing={4}>
                 <Grid size={{ xs: 12 }}>
                     <Typography variant="h3" component="h1" gutterBottom color="text.primary">

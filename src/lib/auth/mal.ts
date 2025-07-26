@@ -1,6 +1,7 @@
 "use server";
 import axios from 'axios';
 import { cookies } from 'next/headers';
+import { cache } from '../api/cache';
 
 const malApi = axios.create({
   baseURL: 'https://api.myanimelist.net/v2',
@@ -33,25 +34,62 @@ malApi.interceptors.response.use(
       try {
         await axios.post('/api/auth/refresh');
         return malApi(originalRequest);
-      } catch (refreshError) {
+      } catch (refreshError: any) {
         console.error('Failed to refresh token, logging out.');
-        window.location.href = '/api/auth/logout'; 
         return Promise.reject(refreshError);
       }
     }
 
-        return Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
 export default malApi;
 
 export const getUserDetails = async () => {
-  const response = await malApi.get('/users/@me');
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('access_token');
+
+  if (!accessToken?.value) {
+    throw new Error('Access token not found');
+  }
+
+  const cacheKey = `user-details:${accessToken.value}`;
+  const cachedData = cache.get(cacheKey);
+
+  if (cachedData) {
+    console.log("Using cache for user details...")
+    return cachedData;
+  }
+
+  console.log("No cache found for user details, fetching from API...")
+  const response = await malApi.get('/users/@me?fields=id,name,picture,gender,birthday,location,joined_at,anime_statistics,time_szone,is_supporter');
+  // Cache for 15 minutes
+  cache.set(cacheKey, response.data, 15 * 60 * 1000);
   return response.data;
 };
 
 export const getUserAnimeList = async (status: string) => {
-  const response = await malApi.get(`/users/@me/animelist?status=${status}&limit=100`);
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('access_token');
+  console.log("Using status ", status);
+
+  if (!accessToken?.value) {
+    throw new Error('Access token not found');
+  }
+
+  const cacheKey = `user-animelist:${status}:${accessToken.value}`;
+  const cachedData = cache.get(cacheKey);
+
+  if (cachedData) {
+    console.log("Using cache for user animelist with cached data... ", cachedData)
+    return cachedData;
+  }
+
+  console.log("No cache found for user animelist, fetching from API...")
+  const response = await malApi.get(`/users/@me/animelist?fields=list_status&limit=100`);
+  console.log("Received response: ", response.data);
+  // Cache for 15 minutes
+  cache.set(cacheKey, response.data, 15 * 60 * 1000);
   return response.data;
 };

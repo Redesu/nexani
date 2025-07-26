@@ -1,7 +1,7 @@
 "use client";
 import { useSeasonalAnime } from "@/hooks/useSeasonalAnime";
 import SeasonalAnimeSlide from "@/components/SeasonalAnimeSlide";
-import { Box, Container, LinearProgress } from "@mui/material";
+import { Box, colors, Container, LinearProgress, Typography } from "@mui/material";
 import AnimeCard from "@/components/AnimeCard";
 import { useTopUpcomingAnime } from "@/hooks/useTopUpcomingAnime";
 import AnimeGrid from "@/components/AnimeGrid";
@@ -48,12 +48,14 @@ export default function Home() {
         <LinearProgress color="success" />
       ) : (
         <>
-          <Box> 
-            <h1 style={{ textAlign: 'center' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1>
+          <Box>
+            {/* <h1 style={{ textAlign: 'center', color: 'black' }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</h1> */}
+            <Typography variant="h3" sx={{ textAlign: 'center', color: "text.primary" }}>Seasonal Anime for {currentYear} {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)}</Typography>
             <SeasonalAnimeSlide animes={anime} />
           </Box>
           <Box className="top upcoming-animes">
-            <h1 style={{ textAlign: 'left', marginLeft: '5px' }}>Top 20 upcoming animes</h1>
+            {/* <h1 style={{ textAlign: 'left', marginLeft: '5px', color: 'black' }}>Top 20 upcoming animes</h1> */}
+            <Typography variant="h4" sx={{ textAlign: 'left', marginLeft: '5px', color: "text.primary" }}>Top 20 upcoming animes</Typography>
             <AnimeGrid animes={topUpcomingAnime} />
           </Box>
         </>
