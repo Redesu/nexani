@@ -8,11 +8,12 @@
 
 -   **User Authentication:** Secure login/logout via MyAnimeList OAuth2.
     ![Login Screenshot](https://i.imgur.com/xNsiTP6.gif) -   **Personalized Anime Lists:** Track your anime with categories like "Watching", "Completed", "On Hold", "Dropped", and "Plan to Watch".
-    ![Anime List Screenshot](https://i.imgur.com/GJO3BqN.gif)-   **Detailed User Profiles:** View personal anime statistics, including mean score, total items, episodes watched, and rewatch count.
+    ![Anime List Screenshot](https://i.imgur.com/k0zqLYW.jpeg)-   **Detailed User Profiles:** View personal anime statistics, including mean score, total items, episodes watched, and rewatch count.
     ![Profile Screenshot](https://i.imgur.com/2htiriQ.png) -   **Seasonal Anime Showcase:** Discover new and popular seasonal anime.
-    ![Seasonal Anime Screenshot](https://i.imgur.com/JjJmMVp.jpeg) -   **Top Upcoming Anime:** Stay updated with the most anticipated anime releases.
-    ![Anime Search](https://i.imgur.com/NzqQuIi.png) -   **Anime Search Functionality:** Easily find any anime with a robust search feature.
-    ![Anime Details](https://i.imgur.com/5iMtvr2.png) -   **Comprehensive Anime Details:** Get in-depth information about any anime, including synopsis, score, episode count, status, and genres.
+    ![Seasonal Anime Screenshot](https://i.imgur.com/JjJmMVp.jpeg) -   **Anime Search Functionality:** Easily find any anime with a robust search feature.
+    ![Anime Search](https://i.imgur.com/NzqQuIi.png) -
+    **Comprehensive Anime Details:** Get in-depth information about any anime, including synopsis, score, episode count, status, and genres. 
+    ![Anime Details](https://i.imgur.com/5iMtvr2.png) -   
 
 ---
 
