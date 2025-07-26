@@ -1,6 +1,6 @@
 # NexAni
 
-![Main page](https://i.imgur.com/vgNQBcA.png) A full-stack anime web application built with **Next.js**, **React**, **Material-UI**, and integrating with the **MyAnimeList API** for data and user authentication.
+![Main page](https://i.imgur.com/Kchaibe.jpeg) A full-stack anime web application built with **Next.js**, **React**, **Material-UI**, and integrating with the **MyAnimeList API** for data and user authentication.
 
 ---
 
