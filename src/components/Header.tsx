@@ -29,7 +29,7 @@ import AnimeListButton from './auth/AnimeListButton';
 
 export default function SearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const { user, loading } = useAuth();
+    const { user, loadingContext } = useAuth();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
 
@@ -70,7 +70,7 @@ export default function SearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {loading ? (
+            {loadingContext ? (
                 <MenuItem disabled>
                     <CircularProgress size={24} color="inherit" />
                 </MenuItem>

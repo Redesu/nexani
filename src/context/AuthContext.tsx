@@ -9,7 +9,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserProfile | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loadingContext, setLoadingContext] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -26,13 +26,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setError("An error occurred while fetching user details");
             })
             .finally(() => {
-                setLoading(false);
+                setLoadingContext(false);
             })
     }, []);
 
     return (
         <AuthContext
-            value={{ user, loading, error, setUser }
+            value={{ user, loadingContext, error, setUser }
             }>
             {children}
         </AuthContext>

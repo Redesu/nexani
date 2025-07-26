@@ -1,12 +1,32 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
 import { Star, Cake, LocationOn, AccessTime, CheckCircle } from '@mui/icons-material';
-import { Grid, Typography, Paper, Box, Stack, Chip, Avatar, Divider } from '@mui/material';
+import { Grid, Typography, Paper, Box, Stack, Chip, Avatar, Divider, CircularProgress } from '@mui/material';
+import { useParams } from "next/navigation";
 
 
 export default function userProfile() {
-    const { user } = useAuth();
-    console.log(user);
+    const params = useParams();
+    const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug || '';
+    const { user, loadingContext } = useAuth();
+
+    if (loadingContext) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    if (!loadingContext && slug !== user?.name) {
+        return (
+            <Box sx={{ flexGrow: 1, p: { xs: 2, md: 3 }, backgroundColor: 'background.default', color: 'text.primary', minHeight: 'calc(100vh - 64px)' }}>
+                <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', mt: 4, textAlign: 'center' }}>
+                    User profile not found
+                </Typography>
+            </Box>
+        );
+    }
     const formatDate = (dateString: string | undefined | null): string => {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);

@@ -21,7 +21,6 @@ export async function GET(request: Request) {
     }
 
     if (state !== storedState) {
-        console.log("Tried to compare state: ", state, " with stored state: ", storedState);
         return NextResponse.json(
             { error: 'Invalid state parameter' },
             { status: 400 }

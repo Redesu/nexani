@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { cookies } from 'next/headers';
 import { cache } from '../api/cache';
+import { AnimeListStatusType } from '../types/AnimeListStatusType';
 
 const malApi = axios.create({
   baseURL: 'https://api.myanimelist.net/v2',
@@ -58,7 +59,6 @@ export const getUserDetails = async () => {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
-    console.log("Using cache for user details...")
     return cachedData;
   }
 
@@ -69,10 +69,9 @@ export const getUserDetails = async () => {
   return response.data;
 };
 
-export const getUserAnimeList = async (status: string) => {
+export const getUserAnimeList = async (status: AnimeListStatusType) => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('access_token');
-  console.log("Using status ", status);
 
   if (!accessToken?.value) {
     throw new Error('Access token not found');
@@ -82,13 +81,11 @@ export const getUserAnimeList = async (status: string) => {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
-    console.log("Using cache for user animelist with cached data... ", cachedData)
     return cachedData;
   }
 
   console.log("No cache found for user animelist, fetching from API...")
-  const response = await malApi.get(`/users/@me/animelist?fields=list_status&limit=100`);
-  console.log("Received response: ", response.data);
+  const response = await malApi.get(`/users/@me/animelist?fields=list_status,num_watched_episodes,num_episodes&limit=100&status=${status}`);
   // Cache for 15 minutes
   cache.set(cacheKey, response.data, 15 * 60 * 1000);
   return response.data;

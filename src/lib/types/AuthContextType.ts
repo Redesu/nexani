@@ -1,7 +1,7 @@
 import { UserProfile } from "./UserProfile";
 export type AuthContextType = {
     user: UserProfile | null;
-    loading: boolean;
+    loadingContext: boolean;
     error: string | null;
     setUser: (user: UserProfile | null) => void;
 };

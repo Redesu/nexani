@@ -11,10 +11,8 @@ export const useUserAnimeList = (status: AnimeListStatusType) => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log("Using status: ", status);
         getUserAnimeList(status)
             .then((data) => {
-                console.log("using data: ", data);
                 if (data) setUserAnimeList(data.data);
             })
             .catch((err) => {
