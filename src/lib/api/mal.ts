@@ -2,8 +2,14 @@
 import { cache } from "./cache";
 import axios from "axios";
 
-const MAL_API_URL = "https://api.myanimelist.net/v2";
 const CLIENT_ID = process.env.MAL_CLIENT_ID;
+
+const malApi = axios.create({
+    baseURL: 'https://api.myanimelist.net/v2',
+    headers: {
+        "X-MAL-CLIENT-ID": CLIENT_ID
+    }
+});
 
 export async function getSeasonalAnime(year: number, season: string) {
     const cacheKey = `seasonal-anime-${year}-${season}`;
@@ -16,11 +22,7 @@ export async function getSeasonalAnime(year: number, season: string) {
     }
     try {
         console.log("No cache found for seasonal anime, fetching from API...");
-        const res = await axios.get(`${MAL_API_URL}/anime/season/${year}/${season}`, {
-            headers: {
-                "X-MAL-CLIENT-ID": CLIENT_ID
-            }
-        });
+        const res = await malApi.get(`/anime/season/${year}/${season}`);
         cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
@@ -41,11 +43,7 @@ export async function getAnimeRanking() {
 
     try {
         console.log("No cache found for anime ranking, fetching from API...");
-        const res = await axios.get(`${MAL_API_URL}/anime/ranking?ranking_type=all`, {
-            headers: {
-                "X-MAL-CLIENT-ID": CLIENT_ID
-            }
-        });
+        const res = await malApi.get(`/anime/ranking?ranking_type=all`);
         cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
@@ -56,11 +54,7 @@ export async function getAnimeRanking() {
 
 export async function searchAnime(query: string) {
     try {
-        const res = await axios.get(`${MAL_API_URL}/anime?q=${query}&fields=id,title,main_picture`, {
-            headers: {
-                "X-MAL-CLIENT-ID": CLIENT_ID
-            }
-        });
+        const res = await malApi.get(`/anime?q=${query}&fields=id,title,main_picture`);
         return res.data;
     } catch (err) {
         console.error("Error searching anime:", err);
@@ -80,11 +74,7 @@ export async function getTopUpcomingAnime() {
 
     try {
         console.log("No cache found for top upcoming anime, fetching from API...");
-        const res = await axios.get(`${MAL_API_URL}/anime/ranking?ranking_type=upcoming&limit=20`, {
-            headers: {
-                "X-MAL-CLIENT-ID": CLIENT_ID
-            }
-        });
+        const res = await malApi.get(`/anime/ranking?ranking_type=upcoming&limit=20`);
         cache.set(cacheKey, res.data, cacheTtl);
         return res.data;
     } catch (err) {
@@ -96,11 +86,7 @@ export async function getTopUpcomingAnime() {
 export async function getAnimeDetails(id: number) {
 
     try {
-        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,alternative_titles,main_picture,start_date,end_date,status,num_episodes,synopsis,mean,genres`, {
-            headers: {
-                "X-MAL-CLIENT-ID": CLIENT_ID
-            }
-        });
+        const res = await malApi.get(`/anime/${id}?fields=id,title,alternative_titles,main_picture,start_date,end_date,status,num_episodes,synopsis,mean,genres`);
         return res.data;
     } catch (err) {
         console.error("Error fetching top upcoming anime:", err);

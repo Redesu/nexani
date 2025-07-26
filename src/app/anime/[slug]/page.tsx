@@ -30,7 +30,7 @@ export default function animeDetailsPage() {
         return <LinearProgress color="success" />
     }
 
-    if (error?.status === 500) {
+    if (error) {
         return (
             <Box sx={{
                 display: 'flex',
@@ -62,7 +62,7 @@ export default function animeDetailsPage() {
     return (
         <Box>
             {loading && <LinearProgress color="success" />}
-            {error && <p>{error.message}</p>}
+            {error && <p>{error}</p>}
             {animeDetails && <AnimeDetailsComponent animeDetails={animeDetails} />}
         </Box>
     )

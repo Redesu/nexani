@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useSearchAnime } from "@/hooks/useSearchAnime";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, InputAdornment, LinearProgress, TextField, useTheme } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import AnimeGrid from "@/components/AnimeGrid";

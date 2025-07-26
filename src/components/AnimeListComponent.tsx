@@ -85,7 +85,7 @@ export function AnimeListComponent() {
                             <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%', borderRadius: '16px', transition: 'transform 0.3s, box-shadow 0.3s', '&:hover': { transform: 'translateY(-5px)', boxShadow: 6 } }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ height: 280, objectFit: 'cover' }}
+                                    sx={{ height: 280, objectFit: 'cover', minHeight: '70vh' }}
                                     image={anime.node.main_picture.large}
                                     alt={anime.node.title}
                                 />

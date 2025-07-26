@@ -5,15 +5,12 @@ import { AnimeDetails } from "@/lib/types/animeDetails";
 export function useAnimeDetails(id: number | null) {
     const [animeDetails, setAnimeDetails] = useState<AnimeDetails | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<{
-        message: string;
-        status?: number;
-    } | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (id === null || isNaN(id)) {
             setLoading(false);
-            setError({ message: "Invalid anime ID" })
+            setError("Invalid anime ID")
             return;
         }
         setLoading(true);
@@ -22,14 +19,11 @@ export function useAnimeDetails(id: number | null) {
                 if (data) {
                     setAnimeDetails(data);
                 } else {
-                    setError({ message: "Anime not found" });
+                    setError("Anime not found");
                 }
             })
             .catch((err) => {
-
-                const status = err.response?.status || 500;
-                const message = err.response?.data?.message || "Unknown error";
-                setError({ message, status });
+                setError("Error getting anime details");
                 setAnimeDetails(null);
             })
             .finally(() => setLoading(false));

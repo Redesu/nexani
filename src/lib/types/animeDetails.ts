@@ -1,5 +1,3 @@
-//        const res = await axios.get(`${MAL_API_URL}/anime/${id}?fields=id,title,main_picture,start_date,end_date,status,num_episodes`, {
-
 interface Genre {
     id: number;
     name: string;

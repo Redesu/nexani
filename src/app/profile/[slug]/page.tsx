@@ -50,7 +50,6 @@ export default function userProfile() {
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.onerror = null;
-                            target.src = `https://placehold.co/80x80/7B68EE/FFFFFF?text=${user?.name.charAt(0)}`;
                         }}
                     />
                     <Box>
