@@ -56,7 +56,7 @@
 
 -   Node.js (v18+ recommended)
 -   npm, yarn, pnpm, or bun
--   MyAnimeList API Credentials (Client ID and Client Secret) from [MyAnimeList API Documentation](https://myanimelist.net/apibase)
+-   MyAnimeList API Credentials (Client ID and Client Secret) from [MyAnimeList API Documentation](https://myanimelist.net/apiconfig/references/api/v2)
 
 ---
 
