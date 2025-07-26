@@ -11,10 +11,10 @@ export default function Home() {
   const currentYear = new Date().getFullYear();
   const currentSeason = getCurrentSeason();
   const { anime, loading } = useSeasonalAnime(currentYear, currentSeason);
-  const { topUpcomingAnime } = useTopUpcomingAnime();
+  const { topUpcomingAnime, loadingTopUpcoming } = useTopUpcomingAnime();
   return (
     <Box sx={{ mt: 4 }}>
-      {loading ? (
+      {loading || loadingTopUpcoming ? (
         <LinearProgress color="success" />
       ) : (
         <>

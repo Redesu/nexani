@@ -59,6 +59,7 @@ export const getUserDetails = async () => {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
+    console.log("Using cache for user details...");
     return cachedData;
   }
 
