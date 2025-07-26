@@ -1,10 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NexAni
+
+![Main page](https://i.imgur.com/vgNQBcA.png) A full-stack anime web application built with **Next.js**, **React**, **Material-UI**, and integrating with the **MyAnimeList API** for data and user authentication.
+
+---
+
+## Features
+
+-   **User Authentication:** Secure login/logout via MyAnimeList OAuth2.
+    ![Login Screenshot](https://i.imgur.com/xNsiTP6.gif) -   **Personalized Anime Lists:** Track your anime with categories like "Watching", "Completed", "On Hold", "Dropped", and "Plan to Watch".
+    ![Anime List Screenshot](https://i.imgur.com/GJO3BqN.gif) -   **Detailed User Profiles:** View personal anime statistics, including mean score, total items, episodes watched, and rewatch count.
+    ![Profile Screenshot](https://i.imgur.com/2htiriQ.png) -   **Seasonal Anime Showcase:** Discover new and popular seasonal anime.
+    ![Seasonal Anime Screenshot](https://i.imgur.com/JjJmMVp.jpeg) -   **Top Upcoming Anime:** Stay updated with the most anticipated anime releases.
+    ![Anime Search](https://i.imgur.com/NzqQuIi.png) -   **Anime Search Functionality:** Easily find any anime with a robust search feature.
+    ![Anime Details](https://i.imgur.com/5iMtvr2.png) -   **Comprehensive Anime Details:** Get in-depth information about any anime, including synopsis, score, episode count, status, and genres.
+
+---
+
+## Project Structure
+
+```
+
+.
+├── public/           \# Static assets (images, fonts)
+├── src/
+│   ├── app/          \# Next.js App Router pages and API routes
+│   │   ├── api/      \# Backend API routes (authentication, token refresh)
+│   │   ├── anime/    \# Dynamic route for individual anime details
+│   │   ├── animelist/ \# Dynamic route for user's anime list
+│   │   ├── profile/  \# Dynamic route for user profile
+│   │   ├── globals.css \# Global styles
+│   │   ├── layout.tsx \# Root layout
+│   │   └── page.tsx  \# Homepage (seasonal & upcoming anime)
+│   ├── components/   \# Reusable React components (AnimeCard, SearchBar, Header, etc.)
+│   ├── context/      \# React Context for global state (e.g., AuthContext)
+│   ├── hooks/        \# Custom React hooks for data fetching and logic
+│   ├── lib/
+│   │   ├── api/      \# API client for MyAnimeList (MAL) and caching logic
+│   │   └── auth/     \# Authentication utilities and MAL authentication API
+│   │   └── types/    \# TypeScript interfaces and types
+│   └── utils/        \# Utility functions (currently in lib/auth/utils.ts)
+├── .vscode/          \# VSCode specific settings
+├── node\_modules/     \# Project dependencies
+├── package.json      \# Project metadata and dependencies
+├── package-lock.json \# Dependency lock file
+├── next.config.ts    \# Next.js configuration
+├── tsconfig.json     \# TypeScript configuration
+└── README.md         \# Project README
+
+````
+
+---
+
+## Prerequisites
+
+-   Node.js (v18+ recommended)
+-   npm, yarn, pnpm, or bun
+-   MyAnimeList API Credentials (Client ID and Client Secret) from [MyAnimeList API Documentation](https://myanimelist.net/apibase)
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
 
-```bash
+```sh
+git clone [https://github.com/Redesu/nexani.git](https://github.com/Redesu/nexani.git) # Adjust if the repository name is different
+cd nexani
+````
+
+### 2\. Install dependencies
+
+```sh
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### 3\. Configure Environment Variables
+
+Create a `.env.local` file in the root of the project by copying `.env.local.example` (if available, otherwise create it manually):
+
+```sh
+cp .env.local.example .env.local # If .env.local.example exists
+# Otherwise, create .env.local and add the following:
+```
+
+**Environment Variables (`.env.local`):**
+
+```
+MAL_CLIENT_ID=your_myanimelist_client_id
+MAL_CLIENT_SECRET=your_myanimelist_client_secret
+NEXT_PUBLIC_API_URL=http://localhost:3000 # Or your deployed frontend URL
+NODE_ENV=production # This can be development, staging, or 
+```
+
+### 4\. Run the development server
+
+```sh
+npm run dev --turbopack # Recommended for faster development
+# or
 npm run dev
 # or
 yarn dev
@@ -14,23 +112,46 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-----
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  - Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+  - Log in via MyAnimeList to access personalized features like your anime list and profile.
 
-## Learn More
+-----
 
-To learn more about Next.js, take a look at the following resources:
+## API Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The application interacts with the MyAnimeList API. Custom API routes are implemented in the Next.js backend to handle authentication and token management.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `src/lib/api/mal.ts` and `src/lib/auth/mal.ts` for more details on data fetching and authentication logic.
 
-## Deploy on Vercel
+**Authentication Endpoints (Next.js API Routes):**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - `GET /api/auth/login` – Initiates the OAuth2 login flow with MyAnimeList.
+  - `GET /api/auth/callback` – Handles the OAuth2 callback from MyAnimeList, exchanges code for tokens.
+  - `POST /api/auth/refresh` – Refreshes the access token using the refresh token.
+  - `GET /api/auth/logout` – Clears authentication cookies.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Key MyAnimeList API Interactions:**
+
+  - `getSeasonalAnime(year, season)` – Fetches seasonal anime.
+  - `getAnimeRanking()` – Fetches top-ranked anime.
+  - `searchAnime(query)` – Searches for anime by title.
+  - `getTopUpcomingAnime()` – Fetches top upcoming anime.
+  - `getAnimeDetails(id)` – Fetches detailed information for a specific anime.
+  - `getUserDetails()` – Fetches details of the authenticated user.
+  - `getUserAnimeList(status)` – Fetches the authenticated user's anime list based on status.
+
+-----
+
+## Contributing
+
+Pull requests are welcome\! For major changes, please open an issue first to discuss what you would like to change.
+
+-----
+
+## License
+
+[MIT](https://www.google.com/search?q=LICENSE)
