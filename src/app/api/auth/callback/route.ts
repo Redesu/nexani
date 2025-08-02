@@ -85,15 +85,19 @@ export async function GET(request: Request) {
         cookieStore.delete('code_verifier');
 
         return NextResponse.redirect(new URL('/', request.url));
-    } catch (err: any) {
+    } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        const axiosError = axios.isAxiosError(err) ? err : null;
+
         console.error('Full error details:', {
-            status: err.response?.status,
-            statusText: err.response?.statusText,
-            data: err.response?.data,
-            message: err.message
+            status: axiosError?.response?.status,
+            statusText: axiosError?.response?.statusText,
+            data: axiosError?.response?.data,
+            message: errorMessage
         });
+
         return NextResponse.json(
-            { error: err.message || 'Unknown error' },
+            { error: errorMessage },
             { status: 500 }
         );
     }

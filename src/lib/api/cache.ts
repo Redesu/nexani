@@ -1,7 +1,7 @@
 class Cache {
-    private cache = new Map<string, { value: any; expiresAt: number }>();
+    private cache = new Map<string, { value: unknown; expiresAt: number }>();
 
-    get(key: string): any | undefined {
+    get<T>(key: string): T | undefined {
         const entry = this.cache.get(key);
         if (!entry) return undefined;
 
@@ -10,10 +10,10 @@ class Cache {
             return undefined;
         }
 
-        return entry.value;
+        return entry.value as T;
     }
 
-    set(key: string, value: any, ttl: number = 60 * 1000): void {
+    set<T>(key: string, value: T, ttl: number = 60 * 1000): void {
         this.cache.set(key, {
             value,
             expiresAt: Date.now() + ttl

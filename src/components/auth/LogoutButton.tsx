@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { Button, CircularProgress, MenuItem } from "@mui/material";
+import { CircularProgress, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 export default function LogoutButton() {

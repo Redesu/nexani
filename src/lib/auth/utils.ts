@@ -48,8 +48,10 @@ export function generateState() {
 export async function getCodeChallenge() {
     // for now, the api only supports plain code verifier
     const verifier = await generateCodeVerifier();
-    const challenge = await generateCodeChallenge(verifier);
+    // When MAL starts supporting PKCE as a standard, uncomment this
+    // const challenge = await generateCodeChallenge(verifier);
     return {
         verifier,
+        // challenge
     };
 }

@@ -5,6 +5,7 @@ import { useSearchAnime } from '@/hooks/useSearchAnime';
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { Anime } from '@/lib/types/anime';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -46,7 +47,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchBar({ onSearchChange }: any) {
+interface SearchBarProps {
+    onSearchChange: (query: string, searchResults: Anime[], searchLoading: boolean, searchError: string | null) => void;
+}
+
+export default function SearchBar({ onSearchChange }: SearchBarProps) {
 
     const [query, setQuery] = useState('');
     const { searchResults, loading: searchLoading, error: searchError } = useSearchAnime(query, 700);

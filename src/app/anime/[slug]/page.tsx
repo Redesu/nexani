@@ -1,14 +1,14 @@
 'use client';
 
 import { useParams } from "next/navigation";
-import { Box, Button, LinearProgress, Typography, useTheme } from "@mui/material";
+import { Box, Button, LinearProgress, Typography } from "@mui/material";
 import { useAnimeDetails } from "@/hooks/useAnimeDetails";
 import AnimeDetailsComponent from "@/components/AnimeDetailsComponent";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
 import { ErrorOutline } from "@mui/icons-material";
 
-export default function animeDetailsPage() {
+export default function AnimeDetailsPage() {
     const params = useParams();
 
     const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug || '';

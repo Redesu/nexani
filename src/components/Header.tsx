@@ -9,29 +9,33 @@ import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchBar from './SearchBar';
 import { SearchBarResults } from './SearchBarResults';
-import { useSearchAnime } from '@/hooks/useSearchAnime';
-import { useState } from 'react';
-import { Avatar, Button, CircularProgress, Link } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { Avatar, CircularProgress, Link } from '@mui/material';
 import LoginButton from './auth/LoginButton';
 import { useAuth } from '@/context/AuthContext';
 import LogoutButton from './auth/LogoutButton';
 import ProfileButton from './auth/ProfileButton';
 import AnimeListButton from './auth/AnimeListButton';
+import { Anime } from '@/lib/types/anime';
 
-
+interface SearchState {
+    query: string;
+    searchResults: Anime[];
+    searchLoading: boolean;
+    searchError: string | null;
+}
 
 export default function SearchAppBar() {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const { user, loadingContext } = useAuth();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
+        useState<null | HTMLElement>(null);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -149,16 +153,16 @@ export default function SearchAppBar() {
 
         </Menu>
     );
-    const [searchState, setSearchState] = useState({
+    const [searchState, setSearchState] = useState<SearchState>({
         query: '',
         searchResults: [],
         searchLoading: false,
         searchError: null,
     });
 
-    const handleSearchChange = (query: string, searchResults: any, searchLoading: boolean, searchError: any) => {
+    const handleSearchChange = useCallback((query: string, searchResults: Anime[], searchLoading: boolean, searchError: string | null) => {
         setSearchState({ query, searchResults, searchLoading, searchError });
-    }
+    }, []);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -207,7 +211,7 @@ export default function SearchAppBar() {
                             searchLoading={searchState.searchLoading}
                             searchError={searchState.searchError}
                             searchResults={searchState.searchResults}
-                            onCloseResults={() => setSearchState({ ...searchState, searchResults: [] })}
+                            onCloseResults={() => setSearchState({ ...searchState, query: '', searchResults: [] })}
                         />
                     </Box>
 

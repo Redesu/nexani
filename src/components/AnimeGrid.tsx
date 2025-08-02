@@ -1,6 +1,6 @@
 import { Anime } from "@/lib/types/anime";
 import AnimeCard from "./AnimeCard";
-import { Grid, Box, Container, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { ChevronRight, ChevronLeft } from "@mui/icons-material";
 import { useRef, useState, useEffect } from "react";
 

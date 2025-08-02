@@ -35,9 +35,9 @@ malApi.interceptors.response.use(
       try {
         await axios.post('/api/auth/refresh');
         return malApi(originalRequest);
-      } catch (refreshError: any) {
-        console.error('Failed to refresh token, logging out.');
-        return Promise.reject(refreshError);
+      } catch (err) {
+        console.error('Failed to refresh token with this error, ', err);
+        return Promise.reject(err);
       }
     }
 

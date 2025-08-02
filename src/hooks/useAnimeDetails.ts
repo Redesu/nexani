@@ -23,6 +23,7 @@ export function useAnimeDetails(id: number | null) {
                 }
             })
             .catch((err) => {
+                console.error("Error getting anime details: ", err);
                 setError("Error getting anime details");
                 setAnimeDetails(null);
             })

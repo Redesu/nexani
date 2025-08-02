@@ -5,7 +5,7 @@ import { Grid, Typography, Paper, Box, Stack, Chip, Avatar, Divider, CircularPro
 import { useParams } from "next/navigation";
 
 
-export default function userProfile() {
+export default function UserProfile() {
     const params = useParams();
     const slug = Array.isArray(params.slug) ? params.slug.join('/') : params.slug || '';
     const { user, loadingContext } = useAuth();
