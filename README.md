@@ -1,10 +1,10 @@
-# [NexAni](https://nexani.vercel.app/)
+# [NexAni](https://nexani.redesu.com.br/)
 
 ![Main page](https://i.imgur.com/Kchaibe.jpeg) A full-stack anime web application built with **Next.js**, **React**, **Material-UI**, and integrating with the **MyAnimeList API** for data and user authentication.
 
 ---
 
-## You can find a live version [HERE](https://nexani.vercel.app/)
+## You can find a live version [HERE](https://nexani.redesu.com.br/)
 
 ## Features
 
