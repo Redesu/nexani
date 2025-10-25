@@ -4,7 +4,7 @@ import Header from "@/components/Header"
 import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
-  title: "NextAni",
+  title: "NexAni",
   description: "Next.js Anime App",
 };
 
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="vsc-initialized vsc-domain-localhost">
+      <body className="vsc-initialized">
 
         <AuthProvider>
           <Header />
