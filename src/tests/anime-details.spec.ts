@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("anime details", async ({ page }) => {
   await page.goto("http://localhost:3000/");
-
+  await page.waitForLoadState("networkidle");
   await page.getByRole("textbox", { name: "search" }).fill("naruto");
   await page
     .getByRole("link", { name: /Naruto:.*Shippuuden/ })
