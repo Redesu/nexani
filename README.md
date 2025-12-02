@@ -149,6 +149,29 @@ See `src/lib/api/mal.ts` and `src/lib/auth/mal.ts` for more details on data fetc
 
 ---
 
+## Testing
+
+The backend is covered by automated tests using **Playwright**. The test suite includes authentication and feature tests.
+
+### Test Structure
+
+```text
+└───test
+    ├───auth
+    └───animes
+    └───social
+```
+
+### Running Tests
+
+To run the full test suite, run the test command:
+
+```sh
+npx playwright test
+```
+
+---
+
 ## Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
