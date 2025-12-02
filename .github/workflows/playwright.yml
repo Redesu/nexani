@@ -19,9 +19,19 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          MAL_CLIENT_ID: ${{ secrets.MAL_CLIENT_ID }}
+          MAL_CLIENT_SECRET: ${{ secrets.MAL_CLIENT_SECRET }}
           NODE_ENV: production
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Start Next.js server
+        run: npm run start &
+        env:
+          MAL_CLIENT_ID: ${{ secrets.MAL_CLIENT_ID }}
+          MAL_CLIENT_SECRET: ${{ secrets.MAL_CLIENT_SECRET }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      - name: Wait for server
+        run: npx wait-on http://localhost:3000 --timeout 60000
       - name: Run Playwright tests
         run: npx playwright test
         env:
