@@ -13,10 +13,10 @@ const AnimeDetailsComponent: React.FC<AnimeDetailsProps> = ({ animeDetails }) =>
             <Grid container spacing={4}>
                 <Grid size={{ xs: 12 }}>
                     <Typography variant="h3" component="h1" gutterBottom color="text.primary">
-                        {animeDetails.title}
+                        {animeDetails.title || ''}
                     </Typography>
                     <Typography variant="h5" component="h2" color="text.secondary">
-                        {animeDetails.alternative_titles.ja}
+                        {animeDetails.alternative_titles.ja || animeDetails.alternative_titles.en || ''}
                     </Typography>
                 </Grid>
 
